@@ -1,0 +1,68 @@
+# Name: Omar Soliman
+# Date: March 21, 2024
+# Description: This project is an AI doctor that will assist patients by answering their questions about the disease, the symptoms, and it's treatment.
+# Test: Disease - Common Cold, Symptoms - cough and fever, Cure - Common Cold. 
+
+import time
+from Database import *
+
+# Initialize the loop with play = "y".
+play = "y"
+while play == "y":
+
+    # Output: Introduction
+    print("Hello! My name is Baymax. My duty is to figure out your disease and give you the best possible care."
+          )
+    time.sleep(3)
+
+    # Output: Instructions on about how to use Baymax.
+    print("\nWhen you are inputting a disease or a symptom(s) make sure that you spell"
+          " it correctly or else I won't be able to help  you.")
+    time.sleep(3)
+
+    # This code will give the user options on what to do.
+    try:
+        print("\n1. Ask Baymax the symptoms of a disease."
+              "\n2. Ask Baymax to find what disease you have."
+              "\n3. Ask Baymax for the treatment steps for a certain disease."
+              "\n4. Exit.")
+        time.sleep(2)
+
+        # Input: Asks the user to select an option.
+        choice = int(input("\nSelect a choice from 1 to 4: "))
+
+        # Process: Executing the code of what the user wants.
+        if choice == 1:
+            time.sleep(1)
+            disease = input("\nEnter the disease name: ").lower()
+            symptom = symptoms(disease)
+            print(symptom)
+
+        elif choice == 2:
+            time.sleep(2)
+            possible_diseases = find_disease()
+            print("Possible diseases:", possible_diseases)
+
+        elif choice == 3:
+            time.sleep(1)
+            disease = input("Enter the disease name: ").lower()
+            treatment_steps = cure(disease)
+            print(treatment_steps)
+
+            if disease not in [d.lower() for d in disease_db.keys()]:
+                print("We will do research to see if this disease exists and update our database.")
+
+        elif choice == 4:
+            time.sleep(1)
+            print("\nI hope you are satisified with my care.")
+            print("Goodbye.")
+            break
+
+        else:
+            print("Unknown choice. Please enter a number from 1-4.")
+
+    # Process: Ensuring everything goes well with the inputs of the user.
+    except ValueError:
+        print(f"Error: {ValueError}. You need to enter an integer.")
+
+    play = again()
