@@ -1,0 +1,127 @@
+# This is the disease database that contains many common diseases and it's symptoms.
+
+disease_db = {
+    "Common Cold": ["cough", "sneezing", "tiredness"],
+    "Chickenpox": ["itchy rash", "red spots", "blisters"],
+    "COVID-19": ["loss of taste", "loss of smell", "fever", "cough"],
+    "HIV": ["fatigue", "weight loss", "muscle aches", "swollen lymph nodes"],
+    "AIDS": ["fatigue", "weight loss", "muscle aches", "swollen lymph nodes"],
+    "Influenza": ["fever", "cough", "sore throat", "muscle aches", "headache"],
+    "Measles": ["caugh", "runny nose", "rash", "fever", "red eyes"],
+    "Meningitis": ["headache", "fever", "stiff neck"],
+    "Monkeypox": ["fever", "headache", "muscle aches", "rash"],
+    "Mononucleosis": ["fatigue", "sore throat", "fever", "headache"],
+    "Sexually Transmitted Infections": ["burning sensation", "rashes", "sores"], 
+    "Tuberculosis": ["persistent cough", "blood in phelgm", "weight loss", "night sweats"],
+    "Viral Hepatitis": ["jaundice", "abdominal pain", "joint pain"],
+    "Whooping Cough": ["severe cough", "whooping sound", "vomiting after coughing"],
+}
+# This is the treatment database that contains many common diseases and it's treatment steps.
+
+treatment_db = {
+    "Common Cold": ["rest", "stay hydrated", "over-the-counter medications"],
+    "Chickenpox": ["calamine lotion", "antihistamines", "cool baths"],
+    "COVID-19": ["isolation", "fluids", "rest", "medications for symptoms"],
+    "HIV": ["antiretroviral therapy", "counseling", "support groups"],
+    "AIDS": ["antiretroviral therapy", "counseling", "support groups"],
+    "Influenza": ["rest", "fluids", "over-the-counter medications", "prescription antiviral medications"],
+    "Measles": ["rest", "hydration", "vitamin A supplementation", "antibiotics for secondary infections"],
+    "Meningitis": ["hospitalization", "antibiotics", "steroids"],
+    "Monkeypox": ["supportive care", "antiviral medications", "vaccination for those at high risk", "pain management"],
+    "Mononucleosis": ["rest", "hydration", "over-the-counter pain relievers", "steroids for severe cases"],
+    "Sexually Transmitted Infections": ["antibiotics", "antiviral medications", "abstinence or safe sex practices"],
+    "Tuberculosis": ["antibiotics", "directly observed therapy", "bed rest", "nutritional support"],
+    "Viral Hepatitis": ["antiviral medications", "hydration", "rest"],
+    "Whooping Cough": ["antibiotics", "rest", "hydration"],
+}
+
+def symptoms(disease):
+    """ Determines the symptoms of the selected disease.
+
+    Args:
+        n/a
+    Returns:
+        The symptoms of the selected disease.
+    """
+
+    disease = disease.lower()
+    for disease_key, symp in disease_db.items():
+        if disease_key.lower() == disease:
+            return f"\nThe symptoms of {disease} are: {', '.join(symp)}."
+        else:
+            return "Disease not found. You may have misspelled the disease. Next time spell it correctly."
+
+def find_disease():
+    """ Asks the user the symptoms they are experiencing and then finds the possible diseases the user may have.
+
+    Args:
+        n/a
+
+    Returns:
+        The symptoms of the selected disease.
+    """
+    user_symptoms = input("\nEnter all the symptoms you are currently experiencing, separated by commas: ")
+    user_symptoms = [symptom.strip().lower() for symptom in user_symptoms.split(",")]
+    possible_diseases = set()
+
+    for disease, symptoms in disease_db.items():
+        for symptom in user_symptoms:
+            if symptom in symptoms:
+                possible_diseases.add(disease)
+
+    if possible_diseases:
+        return f"\nSome possible diseases you may have are: {', '.join(possible_diseases)}."
+    else:
+        return "\nNo disease matched your symptoms. You may have misspelled the symptoms. Next time spell it correctly."
+
+def cure(disease):
+    """ Returns the treatment steps for a selected disease.
+
+    Args:
+        disease (str): The disease input by user.
+
+    Returns:
+        str: The treatment steps.
+    """
+
+    disease = disease.lower()
+    for disease_key, steps in disease_db.items():
+        if disease_key.lower() == disease:
+            return f"\nThe steps to recover from {disease} are: {', '.join(steps)}."
+        else:
+            return "Disease not found. You may have misspelled the disease. Next time spell it correctly."
+
+def again():
+    """ 
+    Asks user if they would like to continue with assistance.
+
+    Args:
+        n/a
+
+    Returns:
+        str
+    """
+
+    while True:
+        ask = input("\nDo you still want my assistance (y/n)? ").lower()
+        if ask == "y" or ask == "n":
+            break
+        else:
+            print("Invalid response. Type 'y' for yes and 'n' for no.")
+
+    if ask == "n":
+        print("\nI hope you are satisified with my care.")
+        print("\nGoodbye.")
+
+    return ask
+
+def main():
+    disease = input("\nEnter the disease name: ").lower()
+    print(cure(disease))
+    user_symptoms = input("\nEnter all the symptoms you are currently experiencing: ").lower().split(", ")
+    print(find_disease())
+    print(symptoms(disease))
+    again()
+
+if __name__ == "__main__":
+    main()
